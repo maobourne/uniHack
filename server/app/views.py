@@ -6,6 +6,7 @@ from app.models import Profile, someImage
 from django.http import HttpResponse
 import uuid
 
+# import app.drivetest
 
 # Create your views here.
 # # Create your views here.
@@ -25,19 +26,23 @@ def index(request):
     elif request.method == "POST":
         imageForm = ProfileForm(request.POST, request.FILES)
 
-        if imageForm.is_valid():
+        imageForm.is_valid()
 
-            image = someImage()
-            image.pic = imageForm.cleaned_data["picture"]
-            print(image.pic.url)
-            imgType = image.pic.url[image.pic.url.rfind("."):]
-            print(imgType)
-            image.pic.save(str(uuid.uuid1()) + imgType,image.pic, False)
-            print("URL after... ", image.pic.url)
-            print("saved")
-            saved = 1
-        else:
-            imageForm = ProfileForm()
+        image = someImage()
+        image.pic = imageForm.cleaned_data["picture"]
+        print(image.pic.url)
+        imgType = image.pic.url[image.pic.url.rfind("."):]
+        print(imgType)
+        uuuuuid = str(uuid.uuid1())
+        image.pic.save(uuuuuid + imgType,image.pic, False)
+        print("URL after... ", "/app/img/" + uuuuuid + imgType)
+
+        print("saved")
+        saved = 1
+
+
+        drivetest.main("/app/img/" + uuuuuid + imgType)
+
 
 
         #upload to gdrive
