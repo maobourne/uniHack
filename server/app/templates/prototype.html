@@ -10,6 +10,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
 <body>
+<button id="testbtn">test</button>
 <div class="container col-xs-12">
     <div class="row text-center" id="header">
         <div class="col-xs-12">
@@ -78,12 +79,9 @@
 
             <div class="form-group">
                <label for="folderid">Google Drive Folder ID</label>
-                   <input type="text" placeholder="{{request.session.folderid}}" class="form-control" id="folderid" name="folderid">
+                   <input type="text" placeholder="Folder ID" class="form-control" id="folderid" name="folderid">
 
              </div>
-            <script>
-                document.getElementById('folderid').value = "{{request.session.folderid}}";
-            </script>
 
              <div class="form-group">
                 <label for="texttype">Text Type</label>
@@ -105,14 +103,8 @@
 
         </form>
         <br>
-        <textarea id="textDisplay" class="form-control" style="margin-top:30px;">
-            
-        </textarea>
-        <script>
-            document.getElementById('textDisplay').innerHTML = "{{request.session.returnText}}";
-            document.getElementById('textDisplay').value = textContent;
-        </script>
-            <!-- <pre id="fileContent"></pre> -->
+        <input type="file" id="openFile">
+            <pre id="fileContent"></pre>
 
     </div>
 
@@ -127,6 +119,19 @@
             }
             fn.readAsText(this.files[0]);
         })
+    $(document).ready(function(){
+        $( "#testbtn" ).click(function() {
+
+            $('#header').after(' <div class="col-xs-2 preview">\n' +
+                '\n' +
+                '                    <img src="/static/img/star.png" class="img-thumbnail preImg">\n' +
+                '                    <div class="caption">\n' +
+                '                        <p>page1</p>\n' +
+                '                    </div>\n' +
+                '\n' +
+                '            </div>')
+        });
+
         $('#toggle').click(function () {
 
             var $test=$('.preImg');
