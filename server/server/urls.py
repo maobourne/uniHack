@@ -19,4 +19,8 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^app/', include('app.urls')),
     url(r'^admin/', admin.site.urls),
+<<<<<<< Updated upstream
+=======
+    url(r'^app/', include('app.urls')),
+>>>>>>> Stashed changes
 ]
