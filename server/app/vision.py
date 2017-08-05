@@ -1,4 +1,4 @@
-def text(url):
+def ocr(url):
     ########### Optical Character Recognition (OCR) with Computer Vision API Using Python #############
     import http.client, urllib.request, urllib.parse, urllib.error, base64, json
 
@@ -49,6 +49,7 @@ def text(url):
         text_output = "Error: Connection Request Fail"
     try:
         text_output = data
+        #text_output = parsed
         conn.close()
 
     except Exception as e:
