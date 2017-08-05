@@ -70,30 +70,32 @@ def index(request):
 
         text_output = str(ocr(image_link))
 
-        for char in text_output:
-            try:
-                char.encode('cp1252')
-            except:
-                char = u'FFFD'
+        prefix = "https://script.google.coma/macros/student.monash.edu/s/"
 
-        print("text_out:", text_output)
+        suffix = "/exec?data="
 
-        textfile_path = ROOT + '/txt/' + fname[:fname.rfind(".")] + ".txt"
+        create_link = prefix + folder_id + suffix + text_output
 
-        with open(textfile_path, "w") as handle:
-            handle.write(text_output)
+        urllib.request
 
-        file_metadata = {
-            'name': fname[:fname.rfind(".")],
-            'parents': [folder_id]
-        }
-        media = MediaFileUpload(textfile_path,
-                                mimetype='text/plain',
-                                resumable=True)
-        file = service.files().create(body=file_metadata,
-                                            media_body=media,
-                                            fields='id').execute()
-        print('Textfile ID: %s' % file.get('id'))
+        # print("text_out:", text_output)
+
+        # textfile_path = ROOT + '/txt/' + fname[:fname.rfind(".")] + ".txt"
+
+        # with open(textfile_path, "w") as handle:
+            # handle.write(text_output)
+
+        # file_metadata = {
+            # 'name': fname[:fname.rfind(".")],
+            # 'parents': [folder_id]
+        # }
+        # media = MediaFileUpload(textfile_path,
+                                # mimetype='text/plain',
+                                # resumable=True)
+        # file = service.files().create(body=file_metadata,
+                                            # media_body=media,
+                                            # fields='id').execute()
+        # print('Textfile ID: %s' % file.get('id'))
 
         return HttpResponse(
             """<h1>file uploaded!</h1>
