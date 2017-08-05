@@ -20,4 +20,5 @@ urlpatterns = [
     url(r'^app/', include('app.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^camera/', include('camera.urls')),
+    url(r'^text/', include('text.urls')),
 ]

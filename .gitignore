@@ -1,2 +1,8 @@
 
 .idea/workspace.xml
+
+server/app/__pycache__/
+
+server/server/__pycache__/
+
+server/text/__pycache__/
