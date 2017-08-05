@@ -12,3 +12,5 @@ server/text/__pycache__/
 >>>>>>> develop
 
 server/app/img/
+
+server/db\.sqlite3
