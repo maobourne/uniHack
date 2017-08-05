@@ -8,6 +8,7 @@ import uuid
 
 from app.vision import ocr
 from app.drivetest import main
+from app.vision import ocr
 
 import json
 
@@ -56,4 +57,8 @@ def index(request):
         print(ocr_back)
         # call text(url)
 
-        return HttpResponse("""<h1>file saved !</h1>""")
+        text_output = str(ocr(image_link))
+
+
+
+        return HttpResponse("""<h1>file saved !</h1><p>Text: """ + text_output + "</p>")
