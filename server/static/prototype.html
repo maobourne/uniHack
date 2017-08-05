@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Title</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
@@ -82,7 +82,7 @@
 
             $('#header').after(' <div class="col-xs-2 preview">\n' +
                 '\n' +
-                '                    <img src="{{MEDIA_URL}}/star.png" class="img-thumbnail preImg">\n' +
+                '                    <img src="img/star.png" class="img-thumbnail preImg">\n' +
                 '                    <div class="caption">\n' +
                 '                        <p>page1</p>\n' +
                 '                    </div>\n' +
@@ -99,7 +99,7 @@
                 for (var i=0;i<$test.length;i++){
                     if (modalImg.length!==$test.length){
 
-                        $('#modalContainer').append('<div class="row pull-left"><img src="{{MEDIA_URL}}/star.png" class="modalImg" style="width: 100%;max-width: 560px"/></div>')
+                        $('#modalContainer').append('<div class="row pull-left"><img src="img/star.png" class="modalImg" style="width: 100%;max-width: 560px"/></div>')
                     }
                     else return
                 }
