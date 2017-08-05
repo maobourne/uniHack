@@ -4,56 +4,141 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Title</title>
-    <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="container">
-        <div class="row text-center"><h1>Text reader</h1></div>
+<button id="testbtn">test</button>
+    <div class="container col-xs-12">
+        <div class="row text-center" id="header">
+            <div class="col-xs-12">
+                    <span>1</span>
+                <h1>Text reader</h1>
+                <p class="kkk">111</p>
+            </div>
+        </div>
+        <div class="row text-center" id="preview">
+
+        </div>
+
         <div class="row text-center">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" id="toggle">
+                Launch demo modal
+            </button>
 
-            <div class="col-xs-2">
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                        </div>
+                        <div class="modal-body" id="testModal">
+                            <div class="container" id="modalContainer">
 
-                    <img src="img/star.png" class="img-thumbnail">
-                    <div class="caption">
-                        <p>page1</p>
+
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
                     </div>
-
-            </div>
-            <div class="col-xs-2">
-                <img src="img/star.png" class="img-thumbnail">
-            </div>
-            <div class="col-xs-2">
-                <img src="img/star.png" class="img-thumbnail">
-            </div>
-            <div class="col-xs-2">
-                <img src="img/star.png" class="img-thumbnail">
-            </div>
-            <div class="col-xs-2">
-                <img src="img/star.png" class="img-thumbnail">
-            </div>
-            <div class="col-xs-2">
-                <img src="img/star.png" class="img-thumbnail">
+                </div>
             </div>
         </div>
 
-<form>
+        <hr>
+        <form>
 
-    <div class="form-group">
-        <div class="btn btn-primary">upload image</div>
-        <div class="btn btn-primary">open camera</div>
+            <div class="form-group">
+                <label>open camera</label>
+                <button type="submit" class="btn btn-primary pull-right">open</button>
+            </div>
+            <div class="form-group">
+                <label>upload image</label>
+                <input type="file">
+            </div>
+            <div class="form-group">
+
+                <label>url</label>
+                <input type="url" placeholder="type your url">
+                <button type="submit" class="btn btn-primary pull-right">submit</button>
+            </div>
+
+        </form>
+
+
+
+
+
     </div>
-    <div class="form-group">
+<script>
+    $(document).ready(function(){
+        $( "#testbtn" ).click(function() {
 
-        <label>url</label>
-        <input type="url" placeholder="type your url">
-        <button type="submit" class="btn btn-primary">submit</button>
-    </div>
+            $('#header').after(' <div class="col-xs-2 preview">\n' +
+                '\n' +
+                '                    <img src="img/star.png" class="img-thumbnail preImg">\n' +
+                '                    <div class="caption">\n' +
+                '                        <p>page1</p>\n' +
+                '                    </div>\n' +
+                '\n' +
+                '            </div>')
+        });
 
-</form>
+        $('#toggle').click(function () {
+
+            var $test=$('.preImg');
+            var modalImg=document.getElementsByClassName('modalImg');
+
+
+                for (var i=0;i<$test.length;i++){
+                    if (modalImg.length!==$test.length){
+
+                        $('#modalContainer').append('<div class="row pull-left"><img src="img/star.png" class="modalImg" style="width: 100%;max-width: 560px"/></div>')
+                    }
+                    else return
+                }
 
 
 
-    </div>
 
+
+
+
+        })
+
+        $( "p" )
+            .mouseup(function() {
+                console.log(this)
+                $( this ).append( "<span style='color:#f00;'>Mouse up.</span>" );
+
+
+            })
+            .mousedown(function() {
+//                $( this ).append( "<span style='color:#00f;'>Mouse down.</span>" );
+                $('p').hide;
+            });
+
+    });
+    var preview=document.getElementById('preview');
+    function modalImage() {
+        console.log(preview.childElementCount)
+        console.log(preview.childNodes[2])
+    }
+
+    function test() {
+        alert('hi')
+    }
+
+    function addButton() {
+
+    }
+</script>
 </body>
 </html>
