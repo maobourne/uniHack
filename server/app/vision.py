@@ -40,15 +40,11 @@ def ocr(url):
         conn.request("POST", "/vision/v1.0/ocr?%s" % params, body, headers)
         response = conn.getresponse()
         data = response.read()
-
-        # 'data' contains the JSON data. The following formats the JSON data for display.
-        parsed = json.loads(data)
-        print ("Response:")
-        print (json.dumps(parsed, sort_keys=True, indent=2))
     except:
         text_output = "Error: Connection Request Fail"
     try:
-        text_output = data
+        text_output = json.parse(str(data))
+        #text_output = text_output.text
         #text_output = parsed
         conn.close()
 
