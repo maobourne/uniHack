@@ -48,7 +48,7 @@ def get_credentials():
         print('Storing credentials to ' + credential_path)
     return credentials
 
-def main():
+def main(IMAGE_SOURCE):
     """Shows basic usage of the Google Drive API.
 
     Creates a Google Drive API service object and outputs the names and IDs
@@ -80,7 +80,7 @@ def main():
     'name' : 'photo.jpg',
     'parents': [folder_id]
     }
-    media = MediaFileUpload('img/evan.jpg',
+    media = MediaFileUpload(IMAGE_SOURCE,
                             mimetype='image/jpeg',
                             resumable=True)
     file = service.files().create(body=file_metadata,
@@ -90,4 +90,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    main(IMAGE_SOURCE)
