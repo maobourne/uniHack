@@ -13,8 +13,9 @@
     <div class="container col-xs-12">
         <div class="row text-center" id="header">
             <div class="col-xs-12">
-
+                    <span>1</span>
                 <h1>Text reader</h1>
+                <p class="kkk">111</p>
             </div>
         </div>
         <div class="row text-center" id="preview">
@@ -82,7 +83,7 @@
 
             $('#header').after(' <div class="col-xs-2 preview">\n' +
                 '\n' +
-                '                    <img src="{{MEDIA_URL}}/star.png" class="img-thumbnail preImg">\n' +
+                '                    <img src="img/star.png" class="img-thumbnail preImg">\n' +
                 '                    <div class="caption">\n' +
                 '                        <p>page1</p>\n' +
                 '                    </div>\n' +
@@ -99,7 +100,7 @@
                 for (var i=0;i<$test.length;i++){
                     if (modalImg.length!==$test.length){
 
-                        $('#modalContainer').append('<div class="row pull-left"><img src="{{MEDIA_URL}}/star.png" class="modalImg" style="width: 100%;max-width: 560px"/></div>')
+                        $('#modalContainer').append('<div class="row pull-left"><img src="img/star.png" class="modalImg" style="width: 100%;max-width: 560px"/></div>')
                     }
                     else return
                 }
@@ -112,12 +113,16 @@
 
         })
 
-        $( "img" )
+        $( "p" )
             .mouseup(function() {
-                $( this ).append( "<p>11111</p>" );
+                console.log(this)
+                $( this ).append( "<span style='color:#f00;'>Mouse up.</span>" );
+
+
             })
             .mousedown(function() {
-                $( this ).append( "<p>22222</p>" );
+//                $( this ).append( "<span style='color:#00f;'>Mouse down.</span>" );
+                $('p').hide;
             });
 
     });
