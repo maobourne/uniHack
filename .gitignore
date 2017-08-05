@@ -10,3 +10,5 @@ server/server/__pycache__/
 
 server/text/__pycache__/
 >>>>>>> develop
+
+server/app/img/

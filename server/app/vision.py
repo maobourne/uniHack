@@ -53,8 +53,8 @@ def ocr(url):
         text_output = "Error: Connection Request Fail"
         conn.close()
     try:
-        data = response.read())
-        dic = json.loads(data)
+        data = response.read()
+        dic = json.loads(data.encode("UTF-8"))
         text_output = ""
         for region in dic["regions"]:
             for line in region["lines"]:
