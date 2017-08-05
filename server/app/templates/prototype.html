@@ -9,7 +9,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
 <body>
-<button id="testbtn">test</button>
+<!--<button id="testbtn">test</button>-->
     <div class="container col-xs-12">
         <div class="row text-center" id="header">
             <div class="col-xs-12">
@@ -60,7 +60,7 @@
             </div>
             <div class="form-group">
                 <label>upload image</label>
-                <input type="file">
+                <input type="file" input type="file" name="img_upload" id="img_upload" onchange="javascript:setImagePreview();">
             </div>
             <div class="form-group">
 
@@ -133,6 +133,48 @@
 
     function addButton() {
 
+    }
+
+
+
+
+
+    function setImagePreview() {
+        var preview, img_txt, localImag, new_img = document.getElementById("img_upload"),
+            picture = new_img.value;
+        if (!picture.match(/.jpg|.gif|.png|.bmp/i)) return alert(""),
+            !1;
+        $('#header').after(' <div class="col-xs-2 preview">\n' +
+            '\n' +
+            '                    <img id="preview" class="img-thumbnail preImg">\n' +
+            '                    <div class="caption">\n' +
+            '                        <p>page1</p>\n' +
+            '                    </div>\n' +
+            '\n' +
+            '            </div>')
+        if (preview = document.getElementById("preview"), new_img.files && new_img.files[0]) preview.style.display = "block",
+//            preview.style.width = "63px",
+//            preview.style.height = "63px",
+            preview.src = window.navigator.userAgent.indexOf("Chrome") >= 1 || window.navigator.userAgent.indexOf("Safari") >= 1 ? window.webkitURL.createObjectURL(new_img.files[0]) : window.URL.createObjectURL(new_img.files[0]);
+//        else {
+//            new_img.select(),
+//                new_img.blur(),
+//                img_txt = document.selection.createRange().text,
+//                localImag = document.getElementById("localImag"),
+//                localImag.style.width = "63px",
+//                localImag.style.height = "63px";
+//            try {
+//                localImag.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)",
+//                    localImag.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = img_txt
+//            } catch(f) {
+//                return alert("您上传的图片格式不正确，请重新选择！"),
+//                    !1
+//            }
+//            preview.style.display = "none",
+//                document.selection.empty()
+//        }
+//        return document.getElementById("DivUp").style.display = "block",
+//            !0
     }
 </script>
 </body>
