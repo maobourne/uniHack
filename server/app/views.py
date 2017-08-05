@@ -76,7 +76,20 @@ def index(request):
 
         create_link = prefix + folder_id + suffix + text_output
 
-            # print("text_out:", text_output)
+        results = service.files().list(
+            pageSize=10, fields="nextPageToken, files(id, name)").execute()
+        items = results.get('files', [])
+        if items:
+            for item in items:
+                print('{0} ({1})'.format(item['name'], item['id']))
+        else:
+            pass
+            # make a new doc
+
+        return render(request, 'prototype.html', {
+            "folderid": request.session["folderid"],
+            "returnText": request.session["returnText"],
+        })
 
         # textfile_path = ROOT + '/txt/' + fname[:fname.rfind(".")] + ".txt"
 
