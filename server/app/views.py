@@ -12,7 +12,7 @@ from app.vision import ocr
 
 from apiclient.http import MediaFileUpload
 
-import json
+
 
 # Create your views here.
 # # Create your views here.
@@ -21,10 +21,9 @@ import json
 #     return HttpResponse(text)
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-folder_id = '0B6TQGqGzyC5rZ2NBUktISDRJRnc'
+folder_id = '0B-dKCdU84B0AbWN2Mng2Vkg5MkE'
 
 class ProfileForm(forms.Form):
-    name = forms.CharField(max_length=100)
     picture = forms.ImageField()
 
 
@@ -34,12 +33,19 @@ def index(request):
     if request.method == "GET":
         return render(request, 'prototype.html')
     elif request.method == "POST":
+        print(request.POST)
         imageForm = ProfileForm(request.POST, request.FILES)
 
         imageForm.is_valid()
 
         image = someImage()
         image.pic = imageForm.cleaned_data["picture"]
+        image.url = request.POST["imgurl"]
+        image.fid = request.POST["folderid"]
+        image.hw = "handwritten" in request.POST
+
+
+
         print(image.pic.url)
         imgType = image.pic.url[image.pic.url.rfind("."):]
         print(imgType)

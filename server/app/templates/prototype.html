@@ -53,31 +53,72 @@
     </div>
 
     <hr>
-    <form enctype = "multipart/form-data" action = "/app/" method = "POST"> {% csrf_token %}
 
-        <div class="form-group">
-            <label>open camera</label>
-            <button type="submit" class="btn btn-primary pull-right">open</button>
-        </div>
-        <div class="form-group">
-            <label>upload image</label>
-            <input type="file" input type="file" name="picture" id="img_upload" onchange="javascript:setImagePreview();">
-        </div>
-        <div class="form-group">
+    <div class="jumbotron">
+        <form enctype = "multipart/form-data" action = "/app/" method = "POST"> {% csrf_token %}
 
-            <label>url</label>
-            <input type="url" placeholder="type your url">
-            <button type="submit" class="btn btn-primary pull-right">submit</button>
-        </div>
-
-    </form>
-
-<button>sent file</button>
+            <div class="form-group">
+                <label for="openc">Open Camera</label>
+                <button type="submit" class="btn btn-primary pull-right" id="openc">open</button>
+            </div>
 
 
+            <div class="form-group">
+                  <label for="img_upload">Upload Image</label>
+                  <input class="btn btn-primary" type="file" input type="file" name="picture" id="img_upload" onchange="javascript:setImagePreview();" multiple>
+
+            </div>
+
+
+
+            <div class="form-group">
+               <label for="urlinput">URL of Image</label>
+                   <input type="text" placeholder="type your url" class="form-control" id="urlinput" name="imgurl">
+
+             </div>
+
+            <div class="form-group">
+               <label for="folderid">Google Drive Folder ID</label>
+                   <input type="text" placeholder="Folder ID" class="form-control" id="folderid" name="folderid">
+
+             </div>
+
+             <div class="form-group">
+                <label for="texttype">Text Type</label>
+             <li class="list-group-item">
+                        Hand written
+                   <div class="material-switch pull-right">
+                       <input id="texttype" name='handwritten' type="checkbox">
+                       <label for="texttype" class="label-primary"></label>
+                  </div>
+                </li>
+              </div>
+
+
+
+
+
+
+                <button type="submit" class="btn btn-primary pull-right">submit</button>
+
+        </form>
+        <br>
+        <input type="file" id="openFile">
+            <pre id="fileContent"></pre>
+
+    </div>
 
 </div>
 <script>
+
+
+        document.getElementById('openFile').addEventListener('change',function () {
+            var fn=new FileReader();
+            fn.onload=function () {
+                document.getElementById('fileContent').textContent=this.result;
+            }
+            fn.readAsText(this.files[0]);
+        })
     $(document).ready(function(){
         $( "#testbtn" ).click(function() {
 
