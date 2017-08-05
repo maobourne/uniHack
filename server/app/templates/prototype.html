@@ -112,6 +112,13 @@
 
         })
 
+        $('img').on('mousedown mouseup', function mouseState(e) {
+            if (e.type == "mousedown") {
+                //code triggers on hold
+                console.log("hold");
+            }
+        });
+
     });
     var preview=document.getElementById('preview');
     function modalImage() {
