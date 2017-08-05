@@ -1,0 +1,62 @@
+
+LOCAL
+2/2
+develop
+3
+master
+REMOTE
+2/2
+origin
+develop
+master
+STASHES
+1
+On develop: Auto stash before merge of "develop" and "origin/develop"
+PULL REQUESTS
+0
+TAGS
+0/0
+SUBMODULES
+0
+server/app/templates/uploadform.html
+Ignore white space
+@@ -0,0 +1,39 @@
+<html> 
+   <body> 
+ 
+      <form name = "form" enctype = "multipart/form-data" 
+         action = "/app/" method = "POST" >{% csrf_token %} 
+ 
+         <div style = "max-width:470px;"> 
+            <center> 
+               <input type = "text" style = "margin-left:20%;" 
+               placeholder = "Name" name = "name" /> 
+            </center> 
+         </div> 
+ 
+         <br> 
+ 
+         <div style = "max-width:470px;"> 
+            <center> 
+               <input type = "file" style = "margin-left:20%;" 
+                  placeholder = "Picture" name = "picture" /> 
+            </center> 
+         </div> 
+ 
+         <br> 
+ 
+         <div style = "max-width:470px;"> 
+            <center> 
+ 
+               <button style = "border:0px;background-color:#4285F4; margin-top:8%; 
+                  height:35px; width:80%; margin-left:19%;" type = "submit" value = "Login" > 
+                  <strong>Login</strong> 
+               </button> 
+ 
+            </center> 
+         </div> 
+ 
+      </form> 
+ 
+   </body> 
+</html> 
