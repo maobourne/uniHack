@@ -10,7 +10,7 @@ from apiclient.http import MediaFileUpload
 
 try:
     import argparse
-    flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
+    flags = tools.argparser.parse_args([])
 except ImportError:
     flags = None
 
@@ -48,6 +48,7 @@ def get_credentials():
         print('Storing credentials to ' + credential_path)
     return credentials
 
+
 def main(IMAGE_SOURCE):
     """Shows basic usage of the Google Drive API.
 
@@ -75,9 +76,11 @@ def main(IMAGE_SOURCE):
 
     # https://developers.google.com/drive/v3/web/folder
 
+    fname = IMAGE_SOURCE[IMAGE_SOURCE.rfind("/")+1:]
+
     folder_id = '0B6TQGqGzyC5rZ2NBUktISDRJRnc'
     file_metadata = {
-    'name' : 'photo.jpg',
+    'name' : fname,
     'parents': [folder_id]
     }
     media = MediaFileUpload(IMAGE_SOURCE,
@@ -89,5 +92,5 @@ def main(IMAGE_SOURCE):
     print('File ID: %s' % file.get('id'))
 
 
-if __name__ == '__main__':
-    main(IMAGE_SOURCE)
+# if __name__ == '__main__':
+    # main(IMAGE_SOURCE)
