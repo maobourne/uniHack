@@ -94,7 +94,7 @@ def index(request):
 
         prefix = "https://script.google.com/a/macros/student.monash.edu/s/"
         infix = "/exec?id="
-        suffix = "&data=""
+        suffix = "&data="
 
         results = service.files().list(
             pageSize=10, fields="nextPageToken, files(id, name)").execute()
@@ -121,16 +121,10 @@ def index(request):
                 file = service.files().insert(
                     body=body,
                     media_body=media_body).execute()
+            except errors.HttpError:
+                print('An error occurred: %s' % error)
 
-            # Uncomment the following line to print the File ID
-            # print 'File ID: %s' % file['id']
             doc_link = prefix + folder_id + infix + file["id"] + suffix + text_output
-
-            
-
-            # return file
-            except errors.HttpError, error:
-                print 'An error occurred: %s' % error
         
         requests.get(doc_link)
 
