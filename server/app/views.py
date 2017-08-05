@@ -24,6 +24,7 @@ import requests
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 # folder_id = '0B6TQGqGzyC5rZ2NBUktISDRJRnc'
+app_id = "AKfycbzXBfABkM_7AFKFcelFcfPshNSX5GrjAr2TNefYmYFYuDrd-OA"
 
 
 class ProfileForm(forms.Form):
@@ -99,16 +100,17 @@ def index(request):
         results = service.files().list(
             pageSize=10, fields="nextPageToken, files(id, name)").execute()
         items = results.get('files', [])
-        create = true
+        create = True
         if items:
             for item in items:
                 if "mimeType" in item.keys():
                     if "mimeType" == "application/vnd.google-apps.document":
-                        create = false
-                        doc_link = prefix + folder_id + infix + item["id"] + suffix + text_output
+                        create = False
+                        # doc_link = prefix + folder_id + infix + item["id"] + suffix + text_output
+                        doc_link = prefix + app_id + infix + item["id"] + suffix + text_output
                 # print('{0} ({1})'.format(item['name'], item['id']))
         if create:
-            media_body = MediaFileUpload(filename, mimetype="application/vnd.google-apps.document", resumable=True)
+            media_body = MediaFileUpload("notes", mimetype="application/vnd.google-apps.document", resumable=True)
             body = {
                 'title': "Shared Notes",
                 'description': "Automated note generation",
@@ -124,9 +126,10 @@ def index(request):
             except errors.HttpError:
                 print('An error occurred: %s' % error)
 
-            doc_link = prefix + folder_id + infix + file["id"] + suffix + text_output
+            # doc_link = prefix + folder_id + infix + file["id"] + suffix + text_output
+            doc_link = prefix + app_id + infix + file["id"] + suffix + text_output
         
-        requests.get(doc_link)
+        r = requests.get(doc_link)
 
         return render(request, 'prototype.html', {
             "folderid": request.session["folderid"],
