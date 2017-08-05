@@ -82,7 +82,7 @@
 
             $('#header').after(' <div class="col-xs-2 preview">\n' +
                 '\n' +
-                '                    <img src="img/star.png" class="img-thumbnail preImg">\n' +
+                '                    <img src="{% static "img/star.png" %}" class="img-thumbnail preImg">\n' +
                 '                    <div class="caption">\n' +
                 '                        <p>page1</p>\n' +
                 '                    </div>\n' +
@@ -99,7 +99,7 @@
                 for (var i=0;i<$test.length;i++){
                     if (modalImg.length!==$test.length){
 
-                        $('#modalContainer').append('<div class="row pull-left"><img src="img/star.png" class="modalImg" style="width: 100%;max-width: 560px"/></div>')
+                        $('#modalContainer').append('<div class="row pull-left"><img src="{% static "img/star.png" %}" class="modalImg" style="width: 100%;max-width: 560px"/></div>')
                     }
                     else return
                 }

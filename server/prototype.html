@@ -15,6 +15,7 @@
             <div class="col-xs-12">
                     <span>1</span>
                 <h1>Text reader</h1>
+                <p id="myElement">111</p>
                 <p class="kkk">111</p>
             </div>
         </div>
@@ -75,15 +76,15 @@
 
 
 
-
     </div>
 <script>
+    var timeoutId = 0;
     $(document).ready(function(){
         $( "#testbtn" ).click(function() {
 
             $('#header').after(' <div class="col-xs-2 preview">\n' +
                 '\n' +
-                '                    <img src="img/star.png" class="img-thumbnail preImg">\n' +
+                '                    <img src="{% static "img/start.png" %}" class="img-thumbnail preImg">\n' +
                 '                    <div class="caption">\n' +
                 '                        <p>page1</p>\n' +
                 '                    </div>\n' +
@@ -100,7 +101,7 @@
                 for (var i=0;i<$test.length;i++){
                     if (modalImg.length!==$test.length){
 
-                        $('#modalContainer').append('<div class="row pull-left"><img src="img/star.png" class="modalImg" style="width: 100%;max-width: 560px"/></div>')
+                        $('#modalContainer').append('<div class="row pull-left"><img src="{% static "img/star.png" %}" class="modalImg" style="width: 100%;max-width: 560px"/></div>')
                     }
                     else return
                 }
@@ -118,13 +119,19 @@
                 console.log(this)
                 $( this ).append( "<span style='color:#f00;'>Mouse up.</span>" );
 
-
             })
             .mousedown(function() {
 //                $( this ).append( "<span style='color:#00f;'>Mouse down.</span>" );
-                $('p').hide;
+                $('img').hide();
             });
 
+
+
+        $('#myElement').on('mousedown', function() {
+            timeoutId = setTimeout(myFunction, 1000);
+        }).on('mouseup mouseleave', function() {
+            clearTimeout(timeoutId);
+        });
     });
     var preview=document.getElementById('preview');
     function modalImage() {
@@ -139,6 +146,9 @@
     function addButton() {
 
     }
+
+
+
 </script>
 </body>
 </html>
