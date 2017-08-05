@@ -94,7 +94,6 @@ def index(request):
 
         create_link = prefix + folder_id + suffix + text_output
 
-<<<<<<< Updated upstream
         results = service.files().list(
             pageSize=10, fields="nextPageToken, files(id, name)").execute()
         items = results.get('files', [])
@@ -105,8 +104,6 @@ def index(request):
             pass
             # make a new doc
 
-=======
->>>>>>> Stashed changes
         return render(request, 'prototype.html', {
             "folderid": request.session["folderid"],
             "returnText": request.session["returnText"],
