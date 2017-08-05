@@ -42,7 +42,7 @@ def index(request):
         print("saved")
         saved = 1
 
-        main("C:/Users/persi/Desktop/uniHack/server/app/img/" + uuuuuid + imgType)
+        image_link = main("C:/Users/persi/Desktop/uniHack/server/app/img/" + uuuuuid + imgType)
 
         # upload to gdrive
 

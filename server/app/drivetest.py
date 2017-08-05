@@ -20,6 +20,7 @@ except ImportError:
 SCOPES = "https://www.googleapis.com/auth/drive"
 CLIENT_SECRET_FILE = 'client_secret.json'
 APPLICATION_NAME = 'Drive API Python Quickstart'
+prefix = "https://drive.google.com/uc?export=download&id="
 
 
 def get_credentials():
@@ -89,8 +90,38 @@ def main(IMAGE_SOURCE):
     file = service.files().create(body=file_metadata,
                                         media_body=media,
                                         fields='id').execute()
-    print('File ID: %s' % file.get('id'))
+    # print('File ID: %s' % file.get('id'))
+    # print('Link: %s' % prefix + file.get('id'))
 
+    def callback(request_id, response, exception):
+        if exception:
+            # Handle error
+            print(exception)
+        else:
+            print("Permission Id: %s" % response.get('id'))
+
+    batch = service.new_batch_http_request(callback=callback)
+    user_permission = {
+        'type': 'anyone',
+        'role': 'reader',
+    }
+    batch.add(service.permissions().create(
+        fileId=file.get('id'),
+        body=user_permission,
+        fields='id',
+    ))
+    domain_permission = {
+        'type': 'anyone',
+        'role': 'reader',
+    }
+    batch.add(service.permissions().create(
+        fileId=file.get('id'),
+        body=domain_permission,
+        fields='id',
+    ))
+    batch.execute()
+
+    return prefix + file.get('id')
 
 # if __name__ == '__main__':
     # main(IMAGE_SOURCE)
