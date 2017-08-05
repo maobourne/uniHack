@@ -7,6 +7,7 @@ from django.http import HttpResponse
 import uuid
 
 from app.drivetest import main
+from app.vision import ocr
 
 # Create your views here.
 # # Create your views here.
@@ -42,7 +43,7 @@ def index(request):
         print("saved")
         saved = 1
 
-        image_link = main("C:/Users/persi/Desktop/uniHack/server/app/img/" + uuuuuid + imgType)
+        image_link = main("app/img/" + uuuuuid + imgType)
 
         # upload to gdrive
 
@@ -50,4 +51,8 @@ def index(request):
 
         # call text(url)
 
-        return HttpResponse("""<h1>file saved !</h1>""")
+        text_output = str(ocr(image_link))
+
+
+
+        return HttpResponse("""<h1>file saved !</h1><p>Text: """ + text_output + "</p>")
