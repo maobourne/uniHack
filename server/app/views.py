@@ -10,6 +10,8 @@ from app.vision import ocr
 from app.drivetest import main
 from app.vision import ocr
 
+from apiclient.http import MediaFileUpload
+
 import json
 
 # Create your views here.
@@ -18,6 +20,8 @@ import json
 #     text = """<h1>file saved !</h1>"""
 #     return HttpResponse(text)
 
+ROOT = os.path.dirname(os.path.abspath(__file__))
+folder_id = '0B6TQGqGzyC5rZ2NBUktISDRJRnc'
 
 class ProfileForm(forms.Form):
     name = forms.CharField(max_length=100)
@@ -45,20 +49,47 @@ def index(request):
 
         print("saved")
         saved = 1
-
-        image_link = main(os.path.dirname(os.path.abspath(__file__)) + "/img/" + uuuuuid + imgType)
+        source = ROOT + "/img/" + uuuuuid + imgType
+        fname = source[source.rfind("/")+1:]
+        image_link, service = main(fname, folder_id, source)
 
         # upload to gdrive
-        print(image_link)
+        # print(image_link)
 
         # get addr of file
 
         ocr_back = ocr(image_link)
-        print(ocr_back)
+        # print(ocr_back)
         # call text(url)
 
         text_output = str(ocr(image_link))
 
+        for char in text_output:
+            try:
+                char.encode('cp1252')
+            except:
+                char = u'FFFD'
 
+        print("text_out:", text_output)
 
-        return HttpResponse("""<h1>file saved !</h1><p>Text: """ + text_output + "</p>")
+        textfile_path = ROOT + '/txt/' + fname[:fname.rfind(".")] + ".txt"
+
+        with open(textfile_path, "w") as handle:
+            handle.write(text_output)
+
+        file_metadata = {
+            'name': fname[:fname.rfind(".")],
+            'parents': [folder_id]
+        }
+        media = MediaFileUpload(textfile_path,
+                                mimetype='text/plain',
+                                resumable=True)
+        file = service.files().create(body=file_metadata,
+                                            media_body=media,
+                                            fields='id').execute()
+        print('Textfile ID: %s' % file.get('id'))
+
+        return HttpResponse(
+            """<h1>file uploaded!</h1>
+               <p>Text: """ + text_output + "</p>"
+        )

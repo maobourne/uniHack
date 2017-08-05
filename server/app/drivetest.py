@@ -50,7 +50,7 @@ def get_credentials():
     return credentials
 
 
-def main(IMAGE_SOURCE):
+def main(fname, folder_id, IMAGE_SOURCE):
     """Shows basic usage of the Google Drive API.
 
     Creates a Google Drive API service object and outputs the names and IDs
@@ -77,9 +77,6 @@ def main(IMAGE_SOURCE):
 
     # https://developers.google.com/drive/v3/web/folder
 
-    fname = IMAGE_SOURCE[IMAGE_SOURCE.rfind("/")+1:]
-
-    folder_id = '0B-dKCdU84B0AUDB4UEFNSW82dE0'
     file_metadata = {
     'name' : fname,
     'parents': [folder_id]
@@ -121,7 +118,7 @@ def main(IMAGE_SOURCE):
     ))
     batch.execute()
 
-    return prefix + file.get('id')
+    return prefix + file.get('id'), service
 
 # if __name__ == '__main__':
     # main(IMAGE_SOURCE)
