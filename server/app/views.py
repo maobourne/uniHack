@@ -21,7 +21,7 @@ from apiclient.http import MediaFileUpload
 #     return HttpResponse(text)
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-folder_id = '0B-dKCdU84B0AbWN2Mng2Vkg5MkE'
+folder_id = '0B6TQGqGzyC5rZ2NBUktISDRJRnc'
 
 class ProfileForm(forms.Form):
     picture = forms.ImageField()
@@ -44,7 +44,7 @@ def index(request):
         image.fid = request.POST["folderid"]
         image.hw = "handwritten" in request.POST
 
-
+        # if request.session
 
         print(image.pic.url)
         imgType = image.pic.url[image.pic.url.rfind("."):]
@@ -76,9 +76,7 @@ def index(request):
 
         create_link = prefix + folder_id + suffix + text_output
 
-        urllib.request
-
-        # print("text_out:", text_output)
+            # print("text_out:", text_output)
 
         # textfile_path = ROOT + '/txt/' + fname[:fname.rfind(".")] + ".txt"
 
