@@ -41,9 +41,11 @@ def get_credentials():
 
     store = Storage(credential_path)
     credentials = store.get()
-    if not credentials or credentials.invalid:
+    # print(credentials)
+    if not credentials or credentials.invalid or credentials is None:
         flow = client.flow_from_clientsecrets(CLIENT_SECRET_FILE, SCOPES)
         flow.user_agent = APPLICATION_NAME  
+        
         if flags:
             credentials = tools.run_flow(flow, store, flags)
         print('Storing credentials to ' + credential_path)
@@ -60,26 +62,13 @@ def main(fname, folder_id, IMAGE_SOURCE):
     http = credentials.authorize(httplib2.Http())
     service = discovery.build('drive', 'v3', http=http)
 
-    # results = service.files().list(
-    #     pageSize=10,fields="nextPageToken, files(id, name)").execute()
-    # items = results.get('files', [])
-    # if not items:
-    #     print('No files found.')
-    # else:
-    #     print('Files:')
-    #     for item in items:
-    #         print('{0} ({1})'.format(item['name'], item['id']))
-
-    # team_drive_metadata = { 'name' : 'Team drive' }
-    # request_id = str(123)
-    # team_drive = service.teamdrives().create(body=team_drive_metadata, requestId=request_id, fields='id').execute()
-    # print('Team Drive ID: %s' % team_drive.get('id'))
-
     # https://developers.google.com/drive/v3/web/folder
 
+    print("\nFOLDERID\n", folder_id)
+
     file_metadata = {
-    'name' : fname,
-    'parents': [folder_id]
+        'name': fname,
+        'parents': [folder_id]
     }
     media = MediaFileUpload(IMAGE_SOURCE,
                             mimetype='image/jpeg',
