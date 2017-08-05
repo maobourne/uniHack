@@ -15,7 +15,8 @@
     var errocb=function(){
         console.log("sth srong");
     }
-    if (navigator.getUserMedia) { // 标准的API
+//    if (navigator.getUserMedia) { // 标准的API
+    if (false) { // 标准的API
         navigator.getUserMedia({ "video": true }, function (stream) {
             video.src = stream;
             video.play();
@@ -26,7 +27,6 @@
             video.play();
         }, errocb);
     }
-
 //    if(navigator.getUserMedia){
 //        navigator.getUserMedia({"video":true},function(stream){
 //            video.src=stream;
