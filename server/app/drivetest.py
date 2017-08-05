@@ -72,6 +72,8 @@ def main():
     # team_drive = service.teamdrives().create(body=team_drive_metadata, requestId=request_id, fields='id').execute()
     # print('Team Drive ID: %s' % team_drive.get('id'))
 
+    # https://developers.google.com/drive/v3/web/folder
+
     folder_id = '0B6TQGqGzyC5rZ2NBUktISDRJRnc'
     file_metadata = {
     'name' : 'photo.jpg',
