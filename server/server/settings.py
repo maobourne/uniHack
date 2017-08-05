@@ -122,4 +122,8 @@ USE_TZ = True
 # remember to append static adderss to urls in urls.py later if u can be arsed
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'static_root')
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static', 'static_dirs'),
+)
 MEDIA_URL = '/static/img/'
