@@ -1,0 +1,54 @@
+function doGet(e) {
+  var newDoc = DocumentApp.create("asdf");
+
+  var text = JSON.stringify(e);
+  text = JSON.parse(text);
+  var docID = text.parameter.id;
+  text = text.parameter.data;
+
+  //var doc = DocumentApp.create('test title');
+  var doc = DocumentApp.openById(docID);
+  // read from existing doc
+  var body = doc.getBody();
+
+  var bodyText = body.getText();
+  var bodySplit = bodyText.split(" ");
+
+  var textSplit = text.split(" ");
+  var minLength;
+  if (bodySplit.length < textSplit.length) {
+    minLength = bodySplit.length;
+  } else {
+    minLength = textSplit.length;
+  }
+  bodySplit = bodySplit.reverse();
+  var count = 0;
+  var duplicate = false;
+  for (i = 0; i < minLength; i++) {
+    for (j = 0; j < minLength; j++) {
+      if (textSplit[i] == bodySplit[j] && duplicate == false) {
+        count += 1;
+        duplicate = true;
+      }
+    }
+    duplicate = false;
+  }
+  if (count / minLength > 0.8) {
+    body.appendParagraph("Redundancy detected.");
+    /*body.appendParagraph(count);
+    body.appendParagraph(minLength);
+    body.appendParagraph(count / minLength);
+    body.appendParagraph(textSplit);
+    body.appendParagraph(bodySplit);*/
+  } else {
+    body.appendParagraph(text);
+    /*body.appendParagraph(count);
+    body.appendParagraph(minLength);
+    body.appendParagraph(count / minLength);
+    body.appendParagraph(textSplit);
+    body.appendParagraph(bodySplit);*/
+  }
+
+  //var text = UrlFetchApp.fetch(url);
+  //body.appendParagraph(text);
+}
