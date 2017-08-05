@@ -2,7 +2,7 @@ from __future__ import print_function
 import httplib2
 import os
 
-from apiclient import discovery
+from apiclient import *
 from oauth2client import client
 from oauth2client import tools
 from oauth2client.file import Storage
@@ -67,10 +67,24 @@ def main():
     #     for item in items:
     #         print('{0} ({1})'.format(item['name'], item['id']))
 
-    team_drive_metadata = { 'name' : 'Team drive' }
-    request_id = str(123)
-    team_drive = service.teamdrives().create(body=team_drive_metadata, requestId=request_id, fields='id').execute()
-    print('Team Drive ID: %s' % team_drive.get('id'))
+    # team_drive_metadata = { 'name' : 'Team drive' }
+    # request_id = str(123)
+    # team_drive = service.teamdrives().create(body=team_drive_metadata, requestId=request_id, fields='id').execute()
+    # print('Team Drive ID: %s' % team_drive.get('id'))
+
+    folder_id = '0B6TQGqGzyC5rZ2NBUktISDRJRnc'
+    file_metadata = {
+    'name' : 'photo.jpg',
+    'parents': [folder_id]
+    }
+    media = MediaFileUpload('img/evan.jpg',
+                            mimetype='image/jpeg',
+                            resumable=True)
+    file = drive_service.files().create(body=file_metadata,
+                                        media_body=media,
+                                        fields='id').execute()
+    print('File ID: %s' % file.get('id'))
+
 
 if __name__ == '__main__':
     main()
