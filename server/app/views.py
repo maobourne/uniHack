@@ -6,7 +6,10 @@ from app.models import Profile, someImage
 from django.http import HttpResponse
 import uuid
 
+from app.vision import ocr
 from app.drivetest import main
+
+import json
 
 # Create your views here.
 # # Create your views here.
@@ -24,7 +27,7 @@ def index(request):
     saved = 0
     print("request received: " + request.method)
     if request.method == "GET":
-        return render(request, 'uploadform.html')
+        return render(request, 'prototype.html')
     elif request.method == "POST":
         imageForm = ProfileForm(request.POST, request.FILES)
 
@@ -42,12 +45,15 @@ def index(request):
         print("saved")
         saved = 1
 
-        image_link = main("C:/Users/persi/Desktop/uniHack/server/app/img/" + uuuuuid + imgType)
+        image_link = main(os.path.dirname(os.path.abspath(__file__)) + "/img/" + uuuuuid + imgType)
 
         # upload to gdrive
+        print(image_link)
 
         # get addr of file
 
+        ocr_back = ocr(image_link)
+        print(ocr_back)
         # call text(url)
 
         return HttpResponse("""<h1>file saved !</h1>""")

@@ -79,7 +79,7 @@ def main(IMAGE_SOURCE):
 
     fname = IMAGE_SOURCE[IMAGE_SOURCE.rfind("/")+1:]
 
-    folder_id = '0B6TQGqGzyC5rZ2NBUktISDRJRnc'
+    folder_id = '0B-dKCdU84B0AUDB4UEFNSW82dE0'
     file_metadata = {
     'name' : fname,
     'parents': [folder_id]
