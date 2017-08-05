@@ -43,6 +43,7 @@ def ocr(url):
 
     # The URL of a JPEG image containing text.
     body = "{'url':'" + url + "'}"
+    text_output = ""
 
     try:
         # Execute the REST API call and get the response.

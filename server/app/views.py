@@ -11,6 +11,10 @@ from app.drivetest import main
 from app.vision import ocr
 
 from apiclient.http import MediaFileUpload
+from apiclient import errors
+from apiclient.http import MediaFileUpload
+
+import requests
 
 # Create your views here.
 # # Create your views here.
@@ -88,52 +92,49 @@ def index(request):
         
         request.session["returnText"] = text_output
 
-        prefix = "https://script.google.coma/macros/student.monash.edu/s/"
-
-        suffix = "/exec?data="
-
-        create_link = prefix + folder_id + suffix + text_output
+        prefix = "https://script.google.com/a/macros/student.monash.edu/s/"
+        infix = "/exec?id="
+        suffix = "&data=""
 
         results = service.files().list(
             pageSize=10, fields="nextPageToken, files(id, name)").execute()
         items = results.get('files', [])
+        create = true
         if items:
             for item in items:
-                print('{0} ({1})'.format(item['name'], item['id']))
-        else:
-            pass
-            # make a new doc
+                if "mimeType" in item.keys():
+                    if "mimeType" == "application/vnd.google-apps.document":
+                        create = false
+                        doc_link = prefix + folder_id + infix + item["id"] + suffix + text_output
+                # print('{0} ({1})'.format(item['name'], item['id']))
+        if create:
+            media_body = MediaFileUpload(filename, mimetype="application/vnd.google-apps.document", resumable=True)
+            body = {
+                'title': "Shared Notes",
+                'description': "Automated note generation",
+                'mimeType': "application/vnd.google-apps.document"
+            }
+            # Set the parent folder.
+            body['parents'] = [{'id': folder_id}]
+
+            try:
+                file = service.files().insert(
+                    body=body,
+                    media_body=media_body).execute()
+
+            # Uncomment the following line to print the File ID
+            # print 'File ID: %s' % file['id']
+            doc_link = prefix + folder_id + infix + file["id"] + suffix + text_output
+
+            
+
+            # return file
+            except errors.HttpError, error:
+                print 'An error occurred: %s' % error
+        
+        requests.get(doc_link)
 
         return render(request, 'prototype.html', {
             "folderid": request.session["folderid"],
             "returnText": request.session["returnText"],
         })
-
-<<<<<<< Updated upstream
-        # textfile_path = ROOT + '/txt/' + fname[:fname.rfind(".")] + ".txt"
-
-        # with open(textfile_path, "w") as handle:
-            # handle.write(text_output)
-
-        # file_metadata = {
-            # 'name': fname[:fname.rfind(".")],
-            # 'parents': [folder_id]
-        # }
-        # media = MediaFileUpload(textfile_path,
-                                # mimetype='text/plain',
-                                # resumable=True)
-        # file = service.files().create(body=file_metadata,
-                                            # media_body=media,
-                                            # fields='id').execute()
-        # print('Textfile ID: %s' % file.get('id'))
-
-        return HttpResponse(
-            """<h1>file uploaded!</h1>
-               <p>Text: """ + text_output + "</p>"
-        )
-=======
-        # return HttpResponse(
-            # """<h1>file uploaded!</h1>
-            #    <p>Text: """ + text_output + "</p>"
-        # )
->>>>>>> Stashed changes
