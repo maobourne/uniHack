@@ -6,6 +6,7 @@ from apiclient import *
 from oauth2client import client
 from oauth2client import tools
 from oauth2client.file import Storage
+from apiclient.http import MediaFileUpload
 
 try:
     import argparse
@@ -47,7 +48,7 @@ def get_credentials():
         print('Storing credentials to ' + credential_path)
     return credentials
 
-def main():
+def main(IMAGE_SOURCE):
     """Shows basic usage of the Google Drive API.
 
     Creates a Google Drive API service object and outputs the names and IDs
@@ -79,14 +80,14 @@ def main():
     'name' : 'photo.jpg',
     'parents': [folder_id]
     }
-    media = MediaFileUpload('img/evan.jpg',
+    media = MediaFileUpload(IMAGE_SOURCE,
                             mimetype='image/jpeg',
                             resumable=True)
-    file = drive_service.files().create(body=file_metadata,
+    file = service.files().create(body=file_metadata,
                                         media_body=media,
                                         fields='id').execute()
     print('File ID: %s' % file.get('id'))
 
 
 if __name__ == '__main__':
-    main()
+    main(IMAGE_SOURCE)
