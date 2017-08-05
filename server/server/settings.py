@@ -118,5 +118,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
+#TODO: this is a hack designed to make images work without changing other html. 
+# remember to append static adderss to urls in urls.py later if u can be arsed
+
 STATIC_URL = '/static/'
 MEDIA_URL = '/static/img/'

@@ -6,6 +6,7 @@ from apiclient import *
 from oauth2client import client
 from oauth2client import tools
 from oauth2client.file import Storage
+from apiclient.http import MediaFileUpload
 
 try:
     import argparse
@@ -82,7 +83,7 @@ def main():
     media = MediaFileUpload('img/evan.jpg',
                             mimetype='image/jpeg',
                             resumable=True)
-    file = drive_service.files().create(body=file_metadata,
+    file = service.files().create(body=file_metadata,
                                         media_body=media,
                                         fields='id').execute()
     print('File ID: %s' % file.get('id'))
