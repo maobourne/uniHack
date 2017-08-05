@@ -1,3 +1,13 @@
+def pretty(d, indent=1):
+    out = ""
+    for key, value in d.items():
+        out += ('\n' * indent + str(key))
+        if isinstance(value, dict):
+            pretty(value, indent+1)
+        else:
+            out += ('\n' * (indent+1) + str(value))
+    return out
+
 def ocr(url):
     ########### Optical Character Recognition (OCR) with Computer Vision API Using Python #############
     import http.client, urllib.request, urllib.parse, urllib.error, base64, json
@@ -39,19 +49,24 @@ def ocr(url):
         conn = http.client.HTTPSConnection('westus.api.cognitive.microsoft.com')
         conn.request("POST", "/vision/v1.0/ocr?%s" % params, body, headers)
         response = conn.getresponse()
-        data = response.read()
     except:
         text_output = "Error: Connection Request Fail"
-    try:
-        text_output = json.parse(str(data))
-        #text_output = text_output.text
-        #text_output = parsed
         conn.close()
-
+    try:
+        data = response.read()
+        dic = json.loads(data)
+        text_output = ""
+        for region in dic["regions"]:
+            for line in region["lines"]:
+                for word in line["words"]:
+                    text_output += word["text"] + " "
+                    # print(word["text"])
+        # print(text_output)
     except Exception as e:
         print('Error:')
         print(e)
-        text_output = "error"
+        # text_output = "error"
+        conn.close()
 
     ####################################
 
