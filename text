@@ -1,0 +1,11 @@
+
+<input type="file" id="openFile">
+    <pre id="fileContent"></pre>
+<script>
+        document.getElementById('openFile').addEventListener('change',function () {
+            var fn=new FileReader();
+            fn.onload=function () {
+                document.getElementById('fileContent').textContent=this.result;
+            }
+            fn.readAsText(this.files[0]);
+        })
