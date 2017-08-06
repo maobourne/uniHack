@@ -138,8 +138,11 @@ def text_recognition(url):
 
         # 'data' contains the JSON data. The following formats the JSON data for display.
         parsed = json.loads(response.text)
-        print ("Response:")
-        print (json.dumps(parsed, sort_keys=True, indent=2))
+        text_output = ""
+        for line in parsed["recognitionResult"]["lines"]:
+            text_output += line["text"]
+        # print ("Response:")
+        # print (json.dumps(parsed, sort_keys=True, indent=2))
 
     except Exception as e:
         print('Error:')
