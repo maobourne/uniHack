@@ -96,16 +96,19 @@ def index(request):
         # infix = "/exec?id="
         # suffix = "&data="
 
-        with open(ROOT + "/txt/" + str(request.session.get_expiry_date())[:10] + ".txt", "a+") as handle:
+        # with open(ROOT + "/txt/" + str(request.session.get_expiry_date())[:10] + ".txt", "a+") as handle:
+            # handle.write(text_output)
+        with open(ROOT + "/txt/" + request.POST["filename"] + ".txt", "a+") as handle:
             handle.write(text_output)
 
         file_metadata = {
-            'name' : 'doctest',
+            'name' : request.POST["filename"],
             # 'mimeType' : 'application/vnd.google-apps.document',
             'parents': [folder_id],
             'mimeType' : 'plain/text',
         }
-        media = MediaFileUpload(ROOT + '/txt/' + str(request.session.get_expiry_date())[:10] + ".txt",
+        # media = MediaFileUpload(ROOT + '/txt/' + str(request.session.get_expiry_date())[:10] + ".txt",
+        media = MediaFileUpload(ROOT + '/txt/' + request.POST["filename"] + ".txt",
                                 mimetype='plain/text',
                                 resumable=True)
         file = service.files().create(body=file_metadata,
