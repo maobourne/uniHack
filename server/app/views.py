@@ -24,7 +24,6 @@ import requests
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 # folder_id = '0B6TQGqGzyC5rZ2NBUktISDRJRnc'
-app_id = "AKfycbzXBfABkM_7AFKFcelFcfPshNSX5GrjAr2TNefYmYFYuDrd-OA"
 
 
 class ProfileForm(forms.Form):
@@ -65,6 +64,7 @@ def index(request):
         if "folderid" in request.session:
             folder_id = request.session["folderid"]
         else:
+            print(request.POST)
             folder_id = "0B6TQGqGzyC5rZmFBZFdaZ2NfcnM"
 
         # if not isinstance(image.pic, ImageField :
@@ -84,52 +84,40 @@ def index(request):
         else:
             text_output = str(ocr(image_link))
 
-        # TODO:
-        for char in text_output:
-            try:
-                char.encode("cp1521")
-            except:
-                char = "?"
+        # for char in text_output:
+        #     try:
+        #         char.encode("cp1521")
+        #     except:
+        #         char = "?"
         
         request.session["returnText"] = text_output
 
-        prefix = "https://script.google.com/a/macros/student.monash.edu/s/"
-        infix = "/exec?id="
-        suffix = "&data="
+        # prefix = "https://script.google.com/a/macros/student.monash.edu/s/"
+        # infix = "/exec?id="
+        # suffix = "&data="
 
-        results = service.files().list(
-            pageSize=10, fields="nextPageToken, files(id, name)").execute()
-        items = results.get('files', [])
-        create = True
-        if items:
-            for item in items:
-                if "mimeType" in item.keys():
-                    if "mimeType" == "application/vnd.google-apps.document":
-                        create = False
-                        # doc_link = prefix + folder_id + infix + item["id"] + suffix + text_output
-                        doc_link = prefix + app_id + infix + item["id"] + suffix + text_output
-                # print('{0} ({1})'.format(item['name'], item['id']))
-        if create:
-            media_body = MediaFileUpload("notes", mimetype="application/vnd.google-apps.document", resumable=True)
-            body = {
-                'title': "Shared Notes",
-                'description': "Automated note generation",
-                'mimeType': "application/vnd.google-apps.document"
-            }
-            # Set the parent folder.
-            body['parents'] = [{'id': folder_id}]
+        with open(ROOT + "/txt/" + str(request.session.get_expiry_date())[:10] + ".txt", "a+") as handle:
+            handle.write(text_output)
 
-            try:
-                file = service.files().insert(
-                    body=body,
-                    media_body=media_body).execute()
-            except errors.HttpError:
-                print('An error occurred: %s' % error)
+        file_metadata = {
+            'name' : 'doctest',
+            # 'mimeType' : 'application/vnd.google-apps.document',
+            'parents': [folder_id],
+            'mimeType' : 'plain/text',
+        }
+        media = MediaFileUpload(ROOT + '/txt/' + str(request.session.get_expiry_date())[:10] + ".txt",
+                                mimetype='plain/text',
+                                resumable=True)
+        file = service.files().create(body=file_metadata,
+                                            media_body=media,
+                                            fields='id').execute()
+        print('File ID: %s' % file.get('id'))
 
-            # doc_link = prefix + folder_id + infix + file["id"] + suffix + text_output
-            doc_link = prefix + app_id + infix + file["id"] + suffix + text_output
+
         
-        r = requests.get(doc_link)
+        # except FileNotFoundError:
+            # with open(ROOT + "/txt/" + fname[:fname.rfind(".")] + ".txt", "w+") as handle:
+                # handle.write(text_output)
 
         return render(request, 'prototype.html', {
             "folderid": request.session["folderid"],
