@@ -6,13 +6,14 @@ from app.models import Profile, someImage
 from django.http import HttpResponse
 import uuid
 
-from app.vision import ocr
 from app.drivetest import main
 from app.vision import ocr
+from app.vision import text_recognition
 
 from apiclient.http import MediaFileUpload
 from apiclient import errors
 from apiclient.http import MediaFileUpload
+import urllib
 
 import requests
 
@@ -72,7 +73,12 @@ def index(request):
             image.pic = imageForm.cleaned_data["picture"]
             fname, image_link, service = getLink(image.pic.url, image, folder_id)
         elif image.url != "":
-            fname, image_link, service = getLink(img.url, image, folder_id)
+            name = image.url[image.url.rfind("/")+1:]
+            address = ROOT + "/img/" + name
+            f = open(address, 'wb')
+            f.write(urllib.request.urlopen(image.url).read())
+            f.close()
+            image_link, service = main(name, folder_id, address)
         else:
             return render(request, 'prototype.html', {
                 "folderid": request.session["folderid"],
